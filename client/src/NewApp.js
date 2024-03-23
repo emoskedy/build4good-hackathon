@@ -1,7 +1,6 @@
 import logo from "./logo.svg";
-import "./App.css";
 import NewApp from "./NewApp";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavigateBar from "./Components/Navigate";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -21,48 +20,46 @@ import { Tab } from "@mui/material";
 
 
 function App() {
-    const [name, setName] = useState("");
-    const [tag, setTag] = useState("");
-    const [description, setDescription] = useState("");
-  
-    function submitNoteToNotion() {
-      console.log("Successsss");
-      fetch("http://localhost:4000/submitNoteToNotion", {
-        method: "post",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: name,
-          tag: tag,
-          description: description,
-        }),
+  const [name, setName] = useState("");
+  const [tag, setTag] = useState("");
+  const [prices, setPrices] = useState("");
+  const [notes, setNotes] = useState([]);
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    fetchNotes(); // Fetch notes on component mount
+  }, []);
+
+  function fetchNotes() {
+    fetch("http://localhost:4000/fetchNotesFromNotion")
+      .then((response) => response.json())
+      .then((data) => {
+        setNotes(data);
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success! ", data);
-        })
-        .catch((error) => {
-          console.log("Error: ", error);
-        });
-    }
-  
-    // Sample data for the menu table
-    const rows = [
-      { id: 1, foodItem: "Food Item 1", category: "Category 1", price: "$10", quantityLeft: 10 },
-      // Add more rows as needed
-    ];
-  
+      .catch((error) => {
+        console.log("Error fetching notes: ", error);
+      });
+  }
+
+  function submitNoteToNotion() {
+    console.log("Note has been sent");
+
+    fetch("http://localhost:4000/submitNoteToNotion", {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        tag: tag,
+        prices: parseFloat(prices) || 0,
+      }),
+    })
+    window.location.reload();
+  }
+
     return (
-      <Router>
-        <NavigateBar>
-          <Routes>
-            <Route path="/" element={<App />} />
-            <Route path="/admin" element={<NewApp />} />
-            <Route path="/" element={<App />} />
-          </Routes>
-        </NavigateBar>
 
         <div className="App" id="AppThis">
           <div style={{ maxWidth: "800px", margin: "0 auto" }}>
@@ -86,11 +83,11 @@ function App() {
                 />
               </div>
               <div style={{ marginRight: "20px" }}>
-                <p>Description for note?</p>
-                <textarea
-                  onChange={(e) => setDescription(e.target.value)}
-                  rows={3}
-                  cols={25}
+                <p>Price</p>
+                <input
+                  type='number'
+                  id='prices'
+                  onChange={(e) => setPrices(e.target.value)} 
                 />
               </div>
               <Button variant="contained" onClick={submitNoteToNotion}>
@@ -99,49 +96,37 @@ function App() {
             </div>
 
             <div style={{ marginTop: "20px" }}>
-              <TableContainer component={Paper}>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell colSpan={5}>
-                        <Stack spacing={1} direction="row" alignItems="center" justifyContent="space-between" sx={{ marginBottom: '10px' }}>
-                          <Button variant="contained">Add Food Item</Button>
-                          <CustomizedInputBase />
-                        </Stack>
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Food Item</TableCell>
+                    <TableCell>Category</TableCell>
+                    <TableCell>Price</TableCell>
+                    <TableCell>Actions</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {notes.map((note) => (
+                    <TableRow key={note.id}>
+                      <TableCell>{note.name}</TableCell>
+                      <TableCell>{note.tag}</TableCell>
+                      <TableCell>${note.prices.toFixed(2)}</TableCell>
+                      <TableCell>
+                        <Stack direction="row" spacing={1}>
+                          <Button variant="contained">Delete</Button>
+                        </Stack> 
                       </TableCell>
                     </TableRow>
-                    <TableRow>
-                      <TableCell>Food Item</TableCell>
-                      <TableCell>Category</TableCell>
-                      <TableCell>Price</TableCell>
-                      <TableCell>Quantity Left</TableCell>
-                      <TableCell>Actions</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {rows.map((row) => (
-                      <TableRow key={row.id}>
-                        <TableCell>{row.foodItem}</TableCell>
-                        <TableCell>{row.category}</TableCell>
-                        <TableCell>{row.price}</TableCell>
-                        <TableCell>{row.quantityLeft}</TableCell>
-                        <TableCell>
-                            <Stack direction="row" spacing={1}>
-                                <Button variant="contained">Edit</Button>
-                                <Button variant="contained">Delete</Button>
-                            </Stack> 
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
             </div>
   
             {/* Other components */}
           </div>
         </div>
-      </Router>
     );
   }
   

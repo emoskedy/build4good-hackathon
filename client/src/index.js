@@ -52,7 +52,6 @@ root.render(
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <MainApp />
-      <NewApp />
     </ThemeProvider>
   </React.StrictMode>
 );

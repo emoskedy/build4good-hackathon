@@ -3,6 +3,7 @@ import App from "./App";
 import Client from "./Client";
 import NavigateBar from "./Components/Navigate";
 import Category from "./CategorizeItem";
+import NewApp from "./NewApp";
 
 function MainApp() {
   return (
