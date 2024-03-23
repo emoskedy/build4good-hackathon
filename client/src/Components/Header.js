@@ -7,8 +7,8 @@ const data = [
     link: "/",
   },
   {
-    title: "Appertizer",
-    link: "/appertizer",
+    title: "Appetizers",
+    link: "/appetizer",
   },
   {
     title: "Rice",

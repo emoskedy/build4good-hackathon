@@ -8,7 +8,7 @@ const CategorizeItem = ({ tags }) => {
 
   useEffect(() => {
     fetchNotes(); // Fetch notes on component mount
-  }, []);
+  }, [tags]);
 
   function fetchNotes() {
     fetch("http://localhost:4000/fetchNotesFromNotion")
