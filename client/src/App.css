@@ -1,10 +1,29 @@
+
 .App {
   text-align:center ;
 }
 
-#AppThis{
-  
+#menuDiv {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Creates two columns */ 
+  column-gap: 150px; /* Horizontal spacing */
+  row-gap: 40px; /* Vertical spacing, adjust as needed */
+  width: 70%;
+  margin: 0 auto; /* Centering the container */
 }
+
+
+.menuItem{
+  border: solid 1px grey;
+  border-radius: 10px;
+}
+
+.menuItem hr{
+  width: 80%;
+  border:  0.1% grey;
+  opacity:40%;
+}
+
 /*
 .App-logo {
   height: 40vmin;

@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider, createTheme } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
+import MainApp from "./MainApp";
 
 const theme = createTheme({
   palette: {
@@ -49,7 +50,7 @@ root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <App />
+      <MainApp />
     </ThemeProvider>
   </React.StrictMode>
 );
