@@ -19,21 +19,9 @@ const NavigateBar = () => {
         </Typography>
       </Link>
 
-      <Link color="secondary" className="navLink" to="/">
-        <Typography className="NavigateOption" variant="h2" color={"primary"}>
-          About Us
-        </Typography>
-      </Link>
-
-      <Link color="secondary" className="navLink" to="/">
-        <Typography className="NavigateOption" variant="h2" color={"primary"}>
-          Contact Us
-        </Typography>
-      </Link>
-
       <Link color="secondary" className="navLink" to="/admin">
         <Typography className="NavigateOption" variant="h2" color={"primary"}>
-          Guest
+          Admin
         </Typography>
       </Link>
     </nav>

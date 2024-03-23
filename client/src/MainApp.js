@@ -12,6 +12,7 @@ function MainApp() {
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/client" element={<Client />} />
+        <Route path="/admin" element={<NewApp />} />
         <Route path="/rice" element={<Category tags="Rice" />} />
         <Route path="/soups" element={<Category tags="Soups" />} />
         <Route path="/thainoodle" element={<Category tags="Thai Noodles" />} />
