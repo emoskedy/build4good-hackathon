@@ -1,16 +1,33 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { useState } from "react";
 import NavigateBar from "./Components/Navigate";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { useState, useEffect } from 'react';
 
 function App() {
   const [name, setName] = useState("");
   const [tag, setTag] = useState("");
-  const [description, setDescription] = useState("");
+  const [prices, setPrices] = useState("");
+  const [notes, setNotes] = useState([]);
+
+  useEffect(() => {
+    fetchNotes(); // Fetch notes on component mount
+  }, []);
+
+  function fetchNotes() {
+    fetch("http://localhost:4000/fetchNotesFromNotion")
+      .then(response => response.json())
+      .then(data => {
+        setNotes(data);
+      })
+      .catch((error) => {
+        console.log('Error fetching notes: ', error);
+      });
+  }
 
   function submitNoteToNotion() {
-    console.log("Sucesssss");
+    console.log('Note has been sent');
+    
     fetch("http://localhost:4000/submitNoteToNotion", {
       method: "post",
       headers: {
@@ -20,18 +37,16 @@ function App() {
       body: JSON.stringify({
         name: name,
         tag: tag,
-        description: description,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success! ", data);
+        prices: parseFloat(prices) || 0,
       })
-      .catch((error) => {
-        console.log("Error: ", error);
-      });
+    }).then(response => response.json())
+    .then(data => {
+      console.log('Success! ', data);
+    }).catch((error) => {
+      console.log('Error: ', error);
+    });
   }
-
+  
   return (
     <Router>
       <NavigateBar>
@@ -44,6 +59,15 @@ function App() {
 
       <div className="App" id="AppThis">
         <div style={{ maxWidth: "500px", margin: "0 auto" }}>
+          <h1>Notion Notes</h1>
+          {notes.map(note => (
+            <div key={note.id}>
+              <h3>{note.name}</h3>
+              <p>Tags: {note.tag.join(', ')}</p>
+              <p>Price: ${note.prices}</p>
+            </div>
+          ))}
+          
           <h1>testing! put your information down below!</h1>
           <p>Name</p>
           <input
@@ -59,12 +83,8 @@ function App() {
             onChange={(e) => setTag(e.target.value)}
           />
 
-          <p>Description for note?</p>
-          <textarea
-            onChange={(e) => setDescription(e.target.value)}
-            rows={10}
-            cols={25}
-          />
+          <p>Price</p>
+          <input type='number' id='prices' onChange={(e) => setPrices(e.target.value)} />
 
           <div>
             <button onClick={submitNoteToNotion}>Submit to Notion</button>
