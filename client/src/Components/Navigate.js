@@ -30,6 +30,12 @@ const NavigateBar = () => {
           Contact Us
         </Typography>
       </Link>
+
+      <Link color="secondary" className="navLink" to="/admin">
+        <Typography className="NavigateOption" variant="h2" color={"primary"}>
+          Guest
+        </Typography>
+      </Link>
     </nav>
   );
 };

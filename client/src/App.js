@@ -1,5 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
+import NewApp from "./NewApp";
 import { useState } from "react";
 import NavigateBar from "./Components/Navigate";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -37,7 +38,7 @@ function App() {
       <NavigateBar>
         <Routes>
           <Route path="/" element={<App />} />
-          <Route path="/" element={<App />} />
+          <Route path="/admin" element={<NewApp />} />
           <Route path="/" element={<App />} />
         </Routes>
       </NavigateBar>
