@@ -1,5 +1,7 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import NavigateBar from "./Components/Navigate";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState, useEffect } from 'react';
 
 function App() {
@@ -25,11 +27,12 @@ function App() {
 
   function submitNoteToNotion() {
     console.log('Note has been sent');
+    
     fetch("http://localhost:4000/submitNoteToNotion", {
       method: "post",
       headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         name: name,
@@ -43,34 +46,52 @@ function App() {
       console.log('Error: ', error);
     });
   }
-
+  
   return (
-    <div className="App">
-      <div style={{maxWidth: "500px", margin: "0 auto"}}>
-        <h1>Notion Notes</h1>
-        {notes.map(note => (
-          <div key={note.id}>
-            <h3>{note.name}</h3>
-            <p>Tags: {note.tag.join(', ')}</p>
-            <p>Price: ${note.prices}</p>
+    <Router>
+      <NavigateBar>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/" element={<App />} />
+          <Route path="/" element={<App />} />
+        </Routes>
+      </NavigateBar>
+
+      <div className="App" id="AppThis">
+        <div style={{ maxWidth: "500px", margin: "0 auto" }}>
+          <h1>Notion Notes</h1>
+          {notes.map(note => (
+            <div key={note.id}>
+              <h3>{note.name}</h3>
+              <p>Tags: {note.tag.join(', ')}</p>
+              <p>Price: ${note.prices}</p>
+            </div>
+          ))}
+          
+          <h1>testing! put your information down below!</h1>
+          <p>Name</p>
+          <input
+            type="text"
+            id="name"
+            onChange={(e) => setName(e.target.value)}
+          />
+
+          <p>Tag</p>
+          <input
+            type="text"
+            id="tag"
+            onChange={(e) => setTag(e.target.value)}
+          />
+
+          <p>Price</p>
+          <input type='number' id='prices' onChange={(e) => setPrices(e.target.value)} />
+
+          <div>
+            <button onClick={submitNoteToNotion}>Submit to Notion</button>
           </div>
-        ))}
-
-        <h1>testing! put your information down below!</h1>
-        <p>Name</p>
-        <input type='text' id='name' onChange={(e) => setName(e.target.value)} />
-
-        <p>Tag</p>
-        <input type='text' id='tag' onChange={(e) => setTag(e.target.value)} />
-
-        <p>Price</p>
-        <input type='number' id='prices' onChange={(e) => setPrices(e.target.value)} />
-
-        <div>
-          <button onClick={submitNoteToNotion}>Submit to Notion</button>
         </div>
       </div>
-    </div>
+    </Router>
   );
 }
 

@@ -1,0 +1,36 @@
+#navBar{
+    border-bottom: solid 1px grey;
+    height: 70px;
+    display: flex;
+
+}
+
+.navLink{
+    padding: 10px;
+    margin: auto;
+    text-decoration: none;
+}
+
+.NavigateOption{
+    display: inline-block;
+    position: relative;
+    color: #1F3541;
+}
+
+.NavigateOption:after{
+    background-color: #1F3541;
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    transform-origin: bottom ;
+    transition: transform 0.25s ease;
+}
+
+.NavigateOption:hover::after{
+    transform: scaleX(1);
+    transform-origin: bottom ;
+}
