@@ -1,17 +1,35 @@
 import logo from "./logo.svg";
 import "./App.css";
-import NewApp from "./NewApp";
-import { useState } from "react";
 import NavigateBar from "./Components/Navigate";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { useState, useEffect } from "react";
+import Header from "./Components/Header";
+import MenuList from "./Components/MenuList";
 
 function App() {
   const [name, setName] = useState("");
   const [tag, setTag] = useState("");
-  const [description, setDescription] = useState("");
+  const [prices, setPrices] = useState("");
+  const [notes, setNotes] = useState([]);
+
+  useEffect(() => {
+    fetchNotes(); // Fetch notes on component mount
+  }, []);
+
+  function fetchNotes() {
+    fetch("http://localhost:4000/fetchNotesFromNotion")
+      .then((response) => response.json())
+      .then((data) => {
+        setNotes(data);
+      })
+      .catch((error) => {
+        console.log("Error fetching notes: ", error);
+      });
+  }
 
   function submitNoteToNotion() {
-    console.log("Sucesssss");
+    console.log("Note has been sent");
+
     fetch("http://localhost:4000/submitNoteToNotion", {
       method: "post",
       headers: {
@@ -21,7 +39,7 @@ function App() {
       body: JSON.stringify({
         name: name,
         tag: tag,
-        description: description,
+        prices: parseFloat(prices) || 0,
       }),
     })
       .then((response) => response.json())
@@ -34,45 +52,12 @@ function App() {
   }
 
   return (
-    <Router>
-      <NavigateBar>
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/admin" element={<NewApp />} />
-          <Route path="/" element={<App />} />
-        </Routes>
-      </NavigateBar>
-
-      <div className="App" id="AppThis">
-        <div style={{ maxWidth: "500px", margin: "0 auto" }}>
-          <h1>testing! put your information down below!</h1>
-          <p>Name</p>
-          <input
-            type="text"
-            id="name"
-            onChange={(e) => setName(e.target.value)}
-          />
-
-          <p>Tag</p>
-          <input
-            type="text"
-            id="tag"
-            onChange={(e) => setTag(e.target.value)}
-          />
-
-          <p>Description for note?</p>
-          <textarea
-            onChange={(e) => setDescription(e.target.value)}
-            rows={10}
-            cols={25}
-          />
-
-          <div>
-            <button onClick={submitNoteToNotion}>Submit to Notion</button>
-          </div>
-        </div>
+    <div className="App" id="AppThis">
+      <div>
+        <Header title="Menu"></Header>
+        <MenuList notes={notes} />
       </div>
-    </Router>
+    </div>
   );
 }
 
