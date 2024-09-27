@@ -2,14 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Navigate.css";
 import { Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+// import { useTheme } from "@mui/material/styles";
 
 const NavigateBar = () => {
-  const theme = useTheme();
-  const textStyle = {
-    color: theme.palette.text.primary,
-    variant: theme.typography.h1,
-  };
+  // const theme = useTheme();
+  // const textStyle = {
+  //   color: theme.palette.text.primary,
+  //   variant: theme.typography.h1,
+  // };
 
   return (
     <nav color="secondary" id="navBar">

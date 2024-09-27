@@ -14,9 +14,9 @@ function MainApp() {
         <Route path="/client" element={<Client />} />
         <Route path="/admin" element={<NewApp />} />
         <Route path="/appetizer" element={<Category tags="Appetizers" />} />
-        <Route path="/rice" element={<Category tags="Rice" />} />
+        <Route path="/rice" element={<Category tags="rice" />} />
         <Route path="/soups" element={<Category tags="Soups" />} />
-        <Route path="/thainoodle" element={<Category tags="Thai Noodles" />} />
+        <Route path="/thainoodle" element={<Category tags="thai noodles" />} />
         <Route path="/thaientrees" element={<Category tags="Thai Entrees" />} />
         <Route path="/bbq" element={<Category tags="BBQ (w/ rice)" />} />
         <Route

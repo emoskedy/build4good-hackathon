@@ -7,23 +7,23 @@ const CategorizeItem = ({ tags }) => {
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
+    function fetchNotes() {
+      fetch("http://localhost:4000/fetchNotesFromNotion")
+        .then((response) => response.json())
+        .then((data) => {
+          // Filter the notes based on the tag
+          const filteredNotes = data.filter((note) =>
+            note.tag.some((tag) => tags.includes(tag))
+          );
+          setNotes(filteredNotes);
+        })
+        .catch((error) => {
+          console.log("Error fetching notes: ", error);
+        });
+    }
+    
     fetchNotes(); // Fetch notes on component mount
   }, [tags]);
-
-  function fetchNotes() {
-    fetch("http://localhost:4000/fetchNotesFromNotion")
-      .then((response) => response.json())
-      .then((data) => {
-        // Filter the notes based on the tag
-        const filteredNotes = data.filter((note) =>
-          note.tag.some((tag) => tags.includes(tag))
-        );
-        setNotes(filteredNotes);
-      })
-      .catch((error) => {
-        console.log("Error fetching notes: ", error);
-      });
-  }
 
   // Render logic remains the same
   return (

@@ -1,8 +1,4 @@
-import logo from "./logo.svg";
-import NewApp from "./NewApp";
 import { useState, useEffect } from "react";
-import NavigateBar from "./Components/Navigate";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -12,11 +8,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Stack from '@mui/material/Stack';
-import IconButton from '@mui/material/IconButton';
-import TextField from '@mui/material/TextField';
-import InputBase from '@mui/material/InputBase';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Tab } from "@mui/material";
+// import IconButton from '@mui/material/IconButton';
+// import InputBase from '@mui/material/InputBase';
 
 
 function App() {
@@ -24,7 +17,6 @@ function App() {
   const [tag, setTag] = useState("");
   const [prices, setPrices] = useState("");
   const [notes, setNotes] = useState([]);
-  const [description, setDescription] = useState("");
 
   useEffect(() => {
     fetchNotes(); // Fetch notes on component mount
@@ -67,7 +59,7 @@ function App() {
             {/* Search box and Add items */}
             <div style={{ display: "flex", alignItems: "center" }}>
               <div style={{ marginRight: "20px" }}>
-                <p>Name</p>
+                <p>New Menu Item</p>
                 <input
                   type="text"
                   id="name"
@@ -130,22 +122,22 @@ function App() {
     );
   }
   
-  function CustomizedInputBase() {
-    return (
-      <Paper
-        component="form"
-        sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', width: 400 }}
-      >
-        <InputBase
-          sx={{ ml: 'auto', flex: 1, textAlign: 'right' }}
-          placeholder="Search"
-          inputProps={{ 'aria-label': 'search' }}
-        />
-        <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+  // function CustomizedInputBase() {
+  //   return (
+  //     <Paper
+  //       component="form"
+  //       sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', width: 400 }}
+  //     >
+  //       <InputBase
+  //         sx={{ ml: 'auto', flex: 1, textAlign: 'right' }}
+  //         placeholder="Search"
+  //         inputProps={{ 'aria-label': 'search' }}
+  //       />
+  //       <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
           
-        </IconButton>
-      </Paper>
-    );
-  }
+  //       </IconButton>
+  //     </Paper>
+  //   );
+  // }
   
   export default App;
